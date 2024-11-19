@@ -26,15 +26,10 @@ export default function LocalSwitcher() {
     const pathname = usePathname();
     const router = useRouter();
     const currentLocale = useLocale();
-
     const [open, setOpen] = useState(false);
 
     const handleLocaleChange = (locale: string) => {
-        if (locale !== currentLocale) {
-            startTransition(() => {
-                router.replace(pathname, { locale });
-            });
-        }
+        if (locale !== currentLocale) { startTransition(() => { router.replace(pathname, { locale }); }); }
     };
 
     return (
