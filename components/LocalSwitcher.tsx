@@ -35,7 +35,7 @@ export default function LocalSwitcher() {
     return (
         <Popover open={open} onOpenChange={setOpen}>
             <PopoverTrigger asChild>
-                <Button variant="outline" aria-expanded={open} className="icon px-3">
+                <Button variant="outline" aria-expanded={open} className="icon px-3 mr-3">
                     {options.find((option) => option.value === currentLocale)?.icon}
                     {/* <span className="text-sm font-medium">{options.find((option) => option.value === currentLocale)?.label}</span> */}
                 </Button>

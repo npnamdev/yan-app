@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import useSWR from "swr";
-import { ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight, ChevronsUpDown, Download, ScanEye, Search, SquarePen, Trash, Upload } from "lucide-react";
+import { ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight, ChevronsUpDown, Clipboard, Download, ScanEye, Search, SquarePen, Trash, Upload } from "lucide-react";
 import Papa from 'papaparse';
 import axios from 'axios';
 import Image from "next/image";
@@ -152,10 +152,11 @@ export default function UserAccountsPage() {
     }, [selectedUsers]);
 
     const menuOptions = [
-        { icon: <ScanEye size={16} strokeWidth={1.5} />, value: "details", label: "Details", action: (userID: string) => console.log("Details clicked", userID) },
-        { icon: <SquarePen size={16} strokeWidth={1.5} />, value: "edit", label: "Update", action: (userID: string) => console.log("Update clicked", userID) },
+        { icon: <Clipboard size={16} strokeWidth={1.5} />, value: "copy", label: "Copy ID người dùng", action: (userID: string) => console.log("Details clicked", userID) },
+        { icon: <ScanEye size={16} strokeWidth={1.5} />, value: "details", label: "Chi tiết người dùng", action: (userID: string) => console.log("Details clicked", userID) },
+        { icon: <SquarePen size={16} strokeWidth={1.5} />, value: "edit", label: "Chỉnh sửa người dùng", action: (userID: string) => console.log("Update clicked", userID) },
         {
-            icon: <Trash size={16} strokeWidth={1.5} />, value: "delete", label: "Delete",
+            icon: <Trash size={16} strokeWidth={1.5} />, value: "delete", label: "Xóa người dùng",
             action: (userID: any) => handleDeleteUser(userID)
         },
     ];
