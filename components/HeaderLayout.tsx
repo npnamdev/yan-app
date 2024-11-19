@@ -1,13 +1,13 @@
 "use client";
 
 import * as React from "react";
-import { 
-    Breadcrumb, 
-    BreadcrumbItem, 
-    BreadcrumbPage, 
-    BreadcrumbLink, 
-    BreadcrumbList, 
-    BreadcrumbSeparator 
+import {
+    Breadcrumb,
+    BreadcrumbItem,
+    BreadcrumbPage,
+    BreadcrumbLink,
+    BreadcrumbList,
+    BreadcrumbSeparator
 } from "@/components/ui/breadcrumb";
 import { Separator } from "@/components/ui/separator";
 import { usePathname } from "next/navigation";
@@ -77,7 +77,6 @@ export default function HeaderLayout() {
                     </BreadcrumbList>
                 </Breadcrumb>
             </div>
-            <Link href="/sign-in">logout</Link>
         </header>
     );
 }

@@ -123,6 +123,8 @@ const data = {
 import { useSidebar } from "@/components/ui/sidebar"
 import { Link, usePathname, useRouter } from "@/i18n/routing";
 import { TeamSwitcher } from "./TeamSwitcher";
+import { toast } from 'sonner';
+
 
 export default function Menubar() {
     const { setOpenMobile } = useSidebar();
@@ -147,10 +149,12 @@ export default function Menubar() {
     };
 
     const handleLogout = () => {
-        console.log("Logout");
-        // router.push('/login');
+        document.body.style.pointerEvents = 'auto';
         router.replace('/sign-in', { locale: 'vi' });
-    }
+        localStorage.removeItem('accessToken');
+        toast.success("Đăng xuất thành công");
+    };
+
 
     return (
         <Sidebar collapsible="icon">

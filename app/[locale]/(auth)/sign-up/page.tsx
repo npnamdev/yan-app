@@ -6,9 +6,8 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { toast } from 'sonner';
-import { useRouter } from 'next/navigation';
 import { registerUser } from '@/services/api';
-import { Link } from '@/i18n/routing';
+import { Link, useRouter } from '@/i18n/routing';
 
 export default function SignUpPage() {
   const [username, setUsername] = useState('');
@@ -31,7 +30,7 @@ export default function SignUpPage() {
       const res: any = await registerUser(username, email, password);
       if (res && res.status == "success") {
         toast.success("Đăng ký thành công");
-        router.push('/login');
+        router.replace('/sign-in', { locale: 'vi' });
       }
     } catch (error) {
       toast.error('Registration failed. Please try again.');
@@ -103,7 +102,7 @@ export default function SignUpPage() {
           <div className="mt-4 text-center text-sm">
             Already have an account?{" "}
             <Link href="/sign-in" className="underline">
-              Login
+              Sign In
             </Link>
           </div>
         </CardContent>

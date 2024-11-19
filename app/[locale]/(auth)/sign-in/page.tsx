@@ -18,9 +18,7 @@ export default function SignInPage() {
         try {
             const res: any = await loginUser(email, password);
             if (res && res.status == "success") {
-                // router.push('/manage');
                 router.replace('/manage', { locale: 'vi' });
-
                 localStorage.setItem('accessToken', res.accessToken);
                 toast.success("Đăng nhập thành công");
             } else {
@@ -56,10 +54,10 @@ export default function SignInPage() {
                             <Input id="password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
                         </div>
                         <Button className="w-full" onClick={() => handleLogin()}>
-                            Login
+                            Sign In
                         </Button>
                         <Button variant="outline" className="w-full">
-                            Login with Google
+                            Sign In with Google
                         </Button>
                     </div>
                     <div className="mt-4 text-center text-sm">
