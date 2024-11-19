@@ -5,10 +5,9 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { useRouter } from 'next/navigation';
 import { loginUser } from "@/services/api";
 import { toast } from 'sonner';
-import { Link } from '@/i18n/routing';
+import { Link, useRouter } from '@/i18n/routing';
 
 export default function SignInPage() {
     const [email, setEmail] = useState('root@doman.com');
@@ -19,7 +18,9 @@ export default function SignInPage() {
         try {
             const res: any = await loginUser(email, password);
             if (res && res.status == "success") {
-                router.push('/manage');
+                // router.push('/manage');
+                router.replace('/manage', { locale: 'vi' });
+
                 localStorage.setItem('accessToken', res.accessToken);
                 toast.success("Đăng nhập thành công");
             } else {

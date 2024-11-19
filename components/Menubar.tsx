@@ -122,6 +122,7 @@ const data = {
 
 import { useSidebar } from "@/components/ui/sidebar"
 import { Link, usePathname, useRouter } from "@/i18n/routing";
+import { TeamSwitcher } from "./TeamSwitcher";
 
 export default function Menubar() {
     const { setOpenMobile } = useSidebar();
@@ -147,14 +148,14 @@ export default function Menubar() {
 
     const handleLogout = () => {
         console.log("Logout");
-        router.push('/login');
-        router.replace(pathname, { locale: 'vi' });
+        // router.push('/login');
+        router.replace('/sign-in', { locale: 'vi' });
     }
 
     return (
         <Sidebar collapsible="icon">
             <SidebarHeader className="px-3.5 border-b bg-white flex justify-center h-[65px]">
-                Header
+                <TeamSwitcher teams={data.teams} />
             </SidebarHeader>
             <SidebarContent className="px-2 bg-white gap-0">
                 <SidebarGroup>
