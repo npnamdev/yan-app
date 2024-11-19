@@ -1,0 +1,10 @@
+{
+    "HomePage": {
+        "title": "Xin chào",
+        "about": "Đi tới trang giới thiệu"
+    },
+    "HeaderLayout": {
+        "home": "Trang chủ",
+        "about": "Giới thiệu"
+    }
+}
