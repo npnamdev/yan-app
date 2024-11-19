@@ -15,6 +15,7 @@ import { useSidebar } from "@/components/ui/sidebar";
 import { Button } from "./ui/button";
 import { AlignLeft } from "lucide-react";
 import { Link } from "@/i18n/routing";
+import LocalSwitcher from "./LocalSwitcher";
 
 export default function HeaderLayout() {
     const {
@@ -77,6 +78,7 @@ export default function HeaderLayout() {
                     </BreadcrumbList>
                 </Breadcrumb>
             </div>
+            <LocalSwitcher />
         </header>
     );
 }
