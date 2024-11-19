@@ -77,7 +77,7 @@ export default function HeaderLayout() {
                     </BreadcrumbList>
                 </Breadcrumb>
             </div>
-            <Link href="/login">logout</Link>
+            <Link href="/sign-in">logout</Link>
         </header>
     );
 }
