@@ -72,7 +72,7 @@ export default function ContentTagPage() {
 
 
     const [currentPage, setCurrentPage] = useState(1);
-    const [selectedUsers, setSelectedUsers] = useState<Tag[]>([]);
+    const [selectedUsers, setSelectedUsers] = useState<IEmail[]>([]);
     const [limit, setLimit] = useState(10);
     const [open, setOpen] = useState(false);
     const [value, setValue] = useState("10");
@@ -99,14 +99,14 @@ export default function ContentTagPage() {
     }, [searchTerm]);
 
     const { data, error, isLoading } = useSWR(
-        `https://api.rock.io.vn/api/v1/course-tags?page=${currentPage}&limit=${limit}&search=${debouncedSearchTerm}`,
+        `https://api.rock.io.vn/api/v1/emails?page=${currentPage}&limit=${limit}&search=${debouncedSearchTerm}`,
         fetcher, { revalidateIfStale: false, revalidateOnFocus: false, revalidateOnReconnect: false }
     );
 
 
-    const roles: Tag[] = data?.data;
+    const roles: IEmail[] = data?.data;
     const totalPages = data?.pagination?.totalPages;
-    const totalUsers = data?.pagination?.totalTags;
+    const totalUsers = data?.pagination?.totalEmails;
     const handleNext = () => { if (currentPage < data?.pagination?.totalPages) setCurrentPage(currentPage + 1); };
     const handlePrevious = () => { if (currentPage > 1) setCurrentPage(currentPage - 1); };
     const handleFirstPage = () => setCurrentPage(1);
@@ -145,18 +145,18 @@ export default function ContentTagPage() {
                 <div className="h-[55px] md:h-[60px] px-5 md:flex justify-between items-center w-full">
                     <div className="relative md:flex items-center hidden">
                         <Search className="absolute left-3 text-gray-600" size={18} strokeWidth={1.5} />
-                        <Input className="w-[360px] px-5 pl-10" type="text" placeholder="Tìm kiếm thẻ khóa học..." value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} />
+                        <Input className="w-[360px] px-5 pl-10" type="text" placeholder="Tìm kiếm email chiến dịch..." value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} />
                     </div>
                     <div className="flex items-center gap-2 h-full justify-between">
                         <Dialog open={openModalTag} onOpenChange={setOpenModalTag}>
                             <DialogTrigger asChild>
                                 <Button className="border flex gap-1 px-3 font-semibold text-[13.5px]">
-                                    <Plus size={15} color="#fff" /> Tạo thẻ khóa học mới
+                                    <Plus size={15} color="#fff" /> Tạo chiến dịch mới
                                 </Button>
                             </DialogTrigger>
                             <DialogContent className="w-full lg:w-[600px] p-0 lg:rounded-xl">
                                 <DialogHeader className="border-b px-6 h-[60px] justify-center">
-                                    <h5 className="text-[16px] font-bold">Tạo thẻ khóa học mới</h5>
+                                    <h5 className="text-[16px] font-bold">Tạo chiến dịch mới</h5>
                                 </DialogHeader>
                                 <div className="flex flex-col gap-5 w-full px-6 py-1">
                                     <div className="grid items-center gap-1.5 w-full">
@@ -191,9 +191,10 @@ export default function ContentTagPage() {
                     <TableHeader>
                         <TableRow className="bg-gray-100 hover:bg-gray-20">
                             <TableHead className="text-black px-4 h-[50px] font-bold text-[13px] whitespace-nowrap pl-6">#</TableHead>
-                            <TableHead className="text-black px-4 h-[50px] font-bold text-[13px] whitespace-nowrap">Tên thẻ</TableHead>
-                            <TableHead className="text-black px-4 h-[50px] font-bold text-[13px] whitespace-nowrap">Mô tả</TableHead>
-                            <TableHead className="text-black px-4 h-[50px] font-bold text-[13px] whitespace-nowrap">Đường dẫn</TableHead>
+                            <TableHead className="text-black px-4 h-[50px] font-bold text-[13px] whitespace-nowrap">Chủ đề</TableHead>
+                            <TableHead className="text-black px-4 h-[50px] font-bold text-[13px] whitespace-nowrap">Người nhận</TableHead>
+                            <TableHead className="text-black px-4 h-[50px] font-bold text-[13px] whitespace-nowrap">Số lượng</TableHead>
+                            <TableHead className="text-black px-4 h-[50px] font-bold text-[13px] whitespace-nowrap">Trạng thái</TableHead>
                             <TableHead className="text-black px-4 h-[50px] font-bold text-[13px] whitespace-nowrap">Ngày tạo</TableHead>
                             <TableHead className="text-black px-4 h-[50px] font-bold text-[13px] whitespace-nowrap">Ngày cập nhật</TableHead>
                             <TableHead className="text-black px-4 h-[50px] font-bold text-[13px] whitespace-nowrap"></TableHead>
@@ -203,18 +204,27 @@ export default function ContentTagPage() {
                         {isLoading ? (
                             <TableRow> <TableCell colSpan={7} className="h-[50px] text-center font-medium"> Đang tải... </TableCell> </TableRow>
                         ) : roles?.length > 0 ? (
-                            roles.map((role: Tag, index: number) => (
+                            roles.map((role: IEmail, index: number) => (
                                 <TableRow key={role._id}>
                                     <TableCell className="h-[50px] px-4 cursor-pointer whitespace-nowrap pl-6 font-semibold">{index += 1}</TableCell>
                                     <TableCell className="h-[50px] px-4 cursor-pointer whitespace-nowrap">
-                                        <h3 className="font-bold text-[13px] capitalize">{role.name}</h3>
+                                        <h3 className="font-bold text-[13px] capitalize">{role.subject}</h3>
                                     </TableCell>
-                                    <TableCell className="h-[50px] px-4 cursor-pointer whitespace-nowrap">{role.description}</TableCell>
                                     <TableCell className="h-[50px] px-4 cursor-pointer whitespace-nowrap">
-                                        <div className={`rounded-lg px-2 py-1 text-xs w-min bg-[#FDEAB9] text-[#9B6327] font-bold`}> {role.slug}</div>
+                                        user14@example.com
                                     </TableCell>
-                                    <TableCell className="h-[50px] px-4 cursor-pointer whitespace-nowrap">{moment(role.createdAt).subtract(10, 'days').calendar()}</TableCell>
-                                    <TableCell className="h-[50px] px-4 cursor-pointer whitespace-nowrap">{moment(role.updatedAt).subtract(10, 'days').calendar()}</TableCell>
+                                    <TableCell className="h-[50px] px-4 cursor-pointer whitespace-nowrap">
+                                        20
+                                    </TableCell>
+                                    <TableCell className="h-[50px] px-4 cursor-pointer whitespace-nowrap">
+                                        <div className={`rounded-lg px-2 py-1 text-xs w-min bg-[#FDEAB9] text-[#9B6327] font-bold`}> {role.status}</div>
+                                    </TableCell>
+                                    <TableCell className="h-[50px] px-4 cursor-pointer whitespace-nowrap">
+                                        11/03/2030
+                                    </TableCell>
+                                    <TableCell className="h-[50px] px-4 cursor-pointer whitespace-nowrap">
+                                        21/06/2068
+                                    </TableCell>
                                     <TableCell className="h-[50px] px-4 cursor-pointer whitespace-nowrap">
                                         <UserActionMenu options={menuOptions} userID={role?._id} />
                                     </TableCell>
@@ -226,7 +236,7 @@ export default function ContentTagPage() {
                     </TableBody>
                 </Table>
                 <div className="h-[55px] px-5 flex justify-between items-center border-t w-full">
-                    <div className="hidden md:flex flex-1 text-sm font-semibold">Tổng số thẻ: {totalUsers}</div>
+                    <div className="hidden md:flex flex-1 text-sm font-semibold">Tổng số chiến dịch: {totalUsers}</div>
                     <div className="flex gap-2 items-center justify-center text-sm font-medium mr-4">
                         <Popover open={open} onOpenChange={setOpen}>
                             <PopoverTrigger asChild>
