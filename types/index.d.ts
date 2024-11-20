@@ -34,7 +34,6 @@ interface Role {
     title?: string;
     url?: string;
 }
-
 interface Tags {
     _id: string;
     name: string;
@@ -148,7 +147,7 @@ interface IOrder {
     __v: number; // Phiên bản document
 }
 
-export interface IEmail {
+interface IEmail {
     _id: string; // ID của email (ObjectId dạng chuỗi)
     recipients: string[]; // Danh sách người nhận (mảng email)
     subject: string; // Tiêu đề email
