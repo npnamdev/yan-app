@@ -8,7 +8,7 @@ import { useSidebar } from "@/components/ui/sidebar";
 import { Button } from "./ui/button";
 import { AlignLeft } from "lucide-react";
 import LocalSwitcher from "./LocalSwitcher";
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 
 export default function HeaderLayout() {
     const { toggleSidebar } = useSidebar();
@@ -17,6 +17,8 @@ export default function HeaderLayout() {
     let pathSegments = pathname.split('/').filter(segment => segment !== '');
     const supportedLanguages = ["vi", "en"];
     if (supportedLanguages.includes(pathSegments[0])) { pathSegments = pathSegments.slice(1); }
+    const currentLocale = useLocale();
+
 
     const segmentLabels: Record<string, string> = {
         "manage": t("manage"),
@@ -48,7 +50,7 @@ export default function HeaderLayout() {
                 <Breadcrumb>
                     <BreadcrumbList>
                         <BreadcrumbItem>
-                            <BreadcrumbLink href={`/${pathSegments[0]}`}>{formatSegment(pathSegments[0])}</BreadcrumbLink>
+                            <BreadcrumbLink href={`/${currentLocale}/manage`}>{formatSegment(pathSegments[0])}</BreadcrumbLink>
                         </BreadcrumbItem>
                         {pathSegments.slice(1).map((segment, index) => (
                             <React.Fragment key={index}>

@@ -130,15 +130,15 @@ export default function CoursesManagePage() {
                         Đang tải khóa học...
                     </div>
                 ) : courses?.length > 0 ? (
-                    <div className="grid auto-rows-min gap-3 md:gap-4 grid-cols-1 md:grid-cols-2">
+                    <div className="grid auto-rows-min gap-2 md:gap-4 grid-cols-1 md:grid-cols-2">
                         {
                             courses.map((course) => (
                                 <div
                                     key={course._id}
-                                    className="bg-white grid cursor-pointer grid-cols-[145px_auto_60px] md:grid-cols-[175px_auto_60px] items-center gap-2 rounded-md border shadow md:shadow-lg"
+                                    className="bg-white grid cursor-pointer grid-cols-[145px_auto_60px] md:grid-cols-[175px_auto_60px] items-center gap-2 rounded-md border shadow md:shadow-md"
                                 >
                                     <div className="m-2.5">
-                                        <Image className="w-full rounded-lg shadow" src={course.image} width={140} height={80} alt={course.title} />
+                                        <Image className="w-full rounded-lg shadow" src={course.image} width={160} height={110} alt={course.title} />
                                     </div>
 
                                     <div className="flex flex-col gap-1.5 text-sm">

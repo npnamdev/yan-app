@@ -132,3 +132,27 @@ interface Course {
     updatedAt: string; // or Date, same as above
     __v: number;
 }
+
+
+interface IOrder {
+    _id: string; // MongoDB ObjectId được biểu diễn dưới dạng string
+    customer: Types.ObjectId | null; // Có thể là ObjectId hoặc null
+    courses: Types.ObjectId[]; // Mảng các ObjectId
+    paymentMethod: 'credit_card' | 'paypal' | 'bank_transfer'; // Phương thức thanh toán
+    status: 'pending' | 'paid' | 'shipped' | 'completed' | 'canceled'; // Trạng thái đơn hàng
+    paymentDate: string; // ISO date string
+    totalAmount: number; // Tổng số tiền
+    createdAt: string; // ISO date string
+    updatedAt: string; // ISO date string
+    __v: number; // Phiên bản document
+}
+
+export interface IEmail {
+    _id: string; // ID của email (ObjectId dạng chuỗi)
+    recipients: string[]; // Danh sách người nhận (mảng email)
+    subject: string; // Tiêu đề email
+    content: string; // Nội dung email
+    status: 'pending' | 'sent' | 'failed'; // Trạng thái gửi email
+    sentAt: Date | null; // Thời gian gửi (null nếu chưa gửi)
+    __v: number; // Phiên bản tài liệu (tự động quản lý bởi Mongoose)
+}
