@@ -6,131 +6,131 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Sidebar, SidebarContent, SidebarFooter, SidebarGroup, SidebarGroupLabel, SidebarHeader, SidebarMenu, SidebarMenuAction, SidebarMenuButton, SidebarMenuItem, SidebarMenuSub, SidebarMenuSubButton, SidebarMenuSubItem } from "@/components/ui/sidebar";
-
-const data = {
-    user: { name: "Phương Nam", email: "root@domain.com", avatar: "https://lineone.piniastudio.com/images/avatar/avatar-6.jpg" },
-    navMain: [
-        {
-            title: "Thống kê & Báo cáo",
-            url: "/manage",
-            icon: LayoutGrid,
-        },
-        {
-            title: "Quản lý khoá học",
-            url: "#",
-            icon: BookOpen,
-            items: [
-                { title: "Danh sách khóa học", url: "/manage/courses" },
-                { title: "Thể loại khoá học", url: "/manage/categories" },
-                { title: "Thẻ khoá học", url: "/manage/tags" },
-                { title: "Mã kích hoạt", url: "/manage/activate-course" },
-            ],
-        },
-        {
-            title: "Quản lý người dùng",
-            url: "#",
-            icon: UsersRound,
-            items: [
-                { title: "Danh sách người dùng", url: "/manage/user-accounts" },
-                { title: "Nhóm người dùng", url: "/manage/account-groups" },
-                { title: "Vai trò và phân quyền", url: "/manage/roles-permissions" },
-            ],
-        },
-        {
-            title: "Quản lý doanh thu",
-            url: "#",
-            icon: ShoppingCart,
-            items: [
-                { title: "Danh sách đơn hàng", url: "/manage/order-list" },
-                { title: "Quản lý COD", url: "/manage/cod-management" },
-                { title: "Xử lý đơn COD", url: "/manage/process-cod-orders" },
-            ],
-        },
-        {
-            title: "Chiến dịch quảng cáo",
-            url: "#",
-            icon: ChartBarDecreasing,
-            items: [
-                { title: "Mã khuyến mãi", url: "/manage/promo-codes" },
-                { title: "Chiến dịch Email", url: "/manage/email-marketing" },
-                { title: "Cửa Sổ Pop-up", url: "/manage/popups" },
-            ],
-        },
-        {
-            title: "Tiếp thị liên kết",
-            url: "#",
-            icon: GitBranch,
-            items: [
-                { title: "Danh sách đại lý", url: "/manage/affiliate-list" },
-                { title: "Thanh toán đại lý", url: "/manage/affiliate-payments" },
-            ],
-        },
-        {
-            title: "Tùy chỉnh giao diện",
-            url: "#",
-            icon: Palette, // Thay bằng biểu tượng phù hợp
-            items: [
-                { title: "Header", url: "/customize/header" },
-                { title: "Hero Section", url: "/customize/hero" },
-                { title: "Danh mục khóa học", url: "/customize/course-categories" },
-                { title: "Danh sách khóa học", url: "/customize/course-list" },
-                { title: "Giới thiệu", url: "/customize/about" },
-                { title: "Testimonials", url: "/customize/testimonials" },
-                { title: "Đối tác", url: "/customize/partners" },
-                { title: "Footer", url: "/customize/footer" },
-            ],
-        },
-        {
-            title: "Quản lý thư viện",
-            url: "/manage/liblarys",
-            icon: SwatchBook,
-        },
-        {
-            title: "Trung tâm hỗ trợ",
-            url: "#",
-            icon: CircleHelp,
-            items: [
-                { title: "Mã kích hoạt", url: "/manage/activation-code" },
-                { title: "Mã chuyển khoản", url: "/manage/transfer-code" },
-            ],
-        },
-    ],
-    settings: [
-        { name: "Cài đặt hiển thị", url: "/manage/display-settings", icon: SlidersVertical },
-        { name: "Cài đặt hệ thống", url: "/manage/system-settings", icon: Settings },
-        { name: "Tài nguyên trang web", url: "/manage/website-resources", icon: Package },
-    ],
-    teams: [
-        {
-            name: "Acme Inc",
-            logo: GalleryVerticalEnd,
-            plan: "Enterprise",
-        },
-        {
-            name: "Acme Corp.",
-            logo: AudioWaveform,
-            plan: "Startup",
-        },
-        {
-            name: "Evil Corp.",
-            logo: Command,
-            plan: "Free",
-        },
-    ],
-};
-
-
+import { useTranslations } from 'next-intl';
 import { useSidebar } from "@/components/ui/sidebar"
 import { Link, usePathname, useRouter } from "@/i18n/routing";
 import { TeamSwitcher } from "./TeamSwitcher";
 import { toast } from 'sonner';
-
 
 export default function Menubar() {
     const { setOpenMobile } = useSidebar();
     const pathname = usePathname();
     const [openSubmenu, setOpenSubmenu] = React.useState<string | null>(null);
     const router = useRouter();
+    const t = useTranslations('menu');
+
+    const data = {
+        user: { name: "Phương Nam", email: "root@domain.com", avatar: "https://lineone.piniastudio.com/images/avatar/avatar-6.jpg" },
+        navMain: [
+            {
+                title: t('statisticsReports'),
+                url: "/manage",
+                icon: LayoutGrid,
+            },
+            {
+                title: t('courseManagement'),
+                url: "#",
+                icon: BookOpen,
+                items: [
+                    { title: t('courseList'), url: "/manage/courses" },
+                    { title: t('courseCategories'), url: "/manage/categories" },
+                    { title: t('courseTags'), url: "/manage/tags" },
+                    { title: t('activationCodes'), url: "/manage/activate-course" },
+                ],
+            },
+            {
+                title: t('userManagement'),
+                url: "#",
+                icon: UsersRound,
+                items: [
+                    { title: t('userAccounts'), url: "/manage/user-accounts" },
+                    { title: t('accountGroups'), url: "/manage/account-groups" },
+                    { title: t('rolesPermissions'), url: "/manage/roles-permissions" },
+                ],
+            },
+            {
+                title: t('revenueManagement'),
+                url: "#",
+                icon: ShoppingCart,
+                items: [
+                    { title: t('orderList'), url: "/manage/order-list" },
+                    { title: t('codManagement'), url: "/manage/cod-management" },
+                    { title: t('processCodOrders'), url: "/manage/process-cod-orders" },
+                ],
+            },
+            {
+                title: t('marketingCampaigns'),
+                url: "#",
+                icon: ChartBarDecreasing,
+                items: [
+                    { title: t('promoCodes'), url: "/manage/promo-codes" },
+                    { title: t('emailCampaigns'), url: "/manage/email-marketing" },
+                    { title: t('popUpWindows'), url: "/manage/popups" },
+                ],
+            },
+            {
+                title: t('affiliateMarketing'),
+                url: "#",
+                icon: GitBranch,
+                items: [
+                    { title: t('affiliateList'), url: "/manage/affiliate-list" },
+                    { title: t('affiliatePayments'), url: "/manage/affiliate-payments" },
+                ],
+            },
+            {
+                title: t('uiCustomization'),
+                url: "#",
+                icon: Palette,
+                items: [
+                    { title: t('header'), url: "/customize/header" },
+                    { title: t('heroSection'), url: "/customize/hero" },
+                    { title: t('courseCategories'), url: "/customize/course-categories" },
+                    { title: t('courseList'), url: "/customize/course-list" },
+                    { title: t('about'), url: "/customize/about" },
+                    { title: t('testimonials'), url: "/customize/testimonials" },
+                    { title: t('partners'), url: "/customize/partners" },
+                    { title: t('footer'), url: "/customize/footer" },
+                ],
+            },
+            {
+                title: t('libraryManagement'),
+                url: "/manage/liblarys",
+                icon: SwatchBook,
+            },
+            {
+                title: t('supportCenter'),
+                url: "#",
+                icon: CircleHelp,
+                items: [
+                    { title: t('activationCodesSupport'), url: "/manage/activation-code" },
+                    { title: t('transferCodes'), url: "/manage/transfer-code" },
+                ],
+            },
+        ],
+        settings: [
+            { name: t('displaySettings'), url: "/manage/display-settings", icon: SlidersVertical },
+            { name: t('systemSettings'), url: "/manage/system-settings", icon: Settings },
+            { name: t('websiteResources'), url: "/manage/website-resources", icon: Package },
+        ],
+        teams: [
+            {
+                name: "Acme Inc",
+                logo: GalleryVerticalEnd,
+                plan: "Enterprise",
+            },
+            {
+                name: "Acme Corp.",
+                logo: AudioWaveform,
+                plan: "Startup",
+            },
+            {
+                name: "Evil Corp.",
+                logo: Command,
+                plan: "Free",
+            },
+        ],
+    };
+
 
 
     React.useEffect(() => {
