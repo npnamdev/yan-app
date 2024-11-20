@@ -12,10 +12,7 @@ import useSWR from "swr";
 import axios from 'axios';
 import { mutate } from "swr";
 import { toast } from "sonner";
-import slugify from 'slugify';
 import copy from 'clipboard-copy';
-
-
 
 export default function CoursesManagePage() {
     const [currentPage, setCurrentPage] = useState(1);
@@ -129,7 +126,7 @@ export default function CoursesManagePage() {
             <div>
                 {isLoading ? (
                     <div className="text-gray-600 flex h-[250px] bg-white w-full flex-col items-center gap-4 justify-center rounded-md border shadow-md text-sm">
-                        <Database strokeWidth={1.5}/>
+                        <Database strokeWidth={1.5} />
                         Đang tải khóa học...
                     </div>
                 ) : courses?.length > 0 ? (
@@ -141,7 +138,7 @@ export default function CoursesManagePage() {
                                     className="bg-white grid cursor-pointer grid-cols-[145px_auto_60px] md:grid-cols-[175px_auto_60px] items-center gap-2 rounded-md border shadow md:shadow-lg"
                                 >
                                     <div className="m-2.5">
-                                        <Image className="w-full rounded-lg shadow" src={course.image} width={180} height={120} alt={course.title} />
+                                        <Image className="w-full rounded-lg shadow" src={course.image} width={140} height={80} alt={course.title} />
                                     </div>
 
                                     <div className="flex flex-col gap-1.5 text-sm">

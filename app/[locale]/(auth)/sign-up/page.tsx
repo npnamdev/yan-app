@@ -8,7 +8,7 @@ import { Label } from "@/components/ui/label";
 import { toast } from 'sonner';
 import { registerUser } from '@/services/api';
 import { Link, useRouter } from '@/i18n/routing';
-import { useTranslations } from 'next-intl'; // Or your i18n library
+import { useLocale, useTranslations } from 'next-intl';
 
 export default function SignUpPage() {
   const [username, setUsername] = useState('');
@@ -16,7 +16,8 @@ export default function SignUpPage() {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const router = useRouter();
-  const t = useTranslations('signUp'); // Namespace for translations
+  const t = useTranslations('signUp');
+  const currentLocale = useLocale();
 
   const handleRegister = async () => {
     if (!username || !email || !password || !confirmPassword) {
@@ -33,7 +34,7 @@ export default function SignUpPage() {
       const res: any = await registerUser(username, email, password);
       if (res && res.status === "success") {
         toast.success(t('registrationSuccess'));
-        router.replace('/sign-in', { locale: 'vi' });
+        router.replace('/sign-in', { locale: currentLocale });
       } else {
         toast.error(t('registrationFailed'));
       }

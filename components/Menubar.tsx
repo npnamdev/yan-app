@@ -6,7 +6,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Sidebar, SidebarContent, SidebarFooter, SidebarGroup, SidebarGroupLabel, SidebarHeader, SidebarMenu, SidebarMenuAction, SidebarMenuButton, SidebarMenuItem, SidebarMenuSub, SidebarMenuSubButton, SidebarMenuSubItem } from "@/components/ui/sidebar";
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import { useSidebar } from "@/components/ui/sidebar"
 import { Link, usePathname, useRouter } from "@/i18n/routing";
 import { TeamSwitcher } from "./TeamSwitcher";
@@ -18,6 +18,7 @@ export default function Menubar() {
     const [openSubmenu, setOpenSubmenu] = React.useState<string | null>(null);
     const router = useRouter();
     const t = useTranslations('menu');
+    const currentLocale = useLocale();
 
     const data = {
         user: { name: "Phương Nam", email: "root@domain.com", avatar: "https://lineone.piniastudio.com/images/avatar/avatar-6.jpg" },
@@ -131,8 +132,6 @@ export default function Menubar() {
         ],
     };
 
-
-
     React.useEffect(() => {
         data.navMain.forEach((item) => {
             if (item.items) {
@@ -150,11 +149,10 @@ export default function Menubar() {
 
     const handleLogout = () => {
         document.body.style.pointerEvents = 'auto';
-        router.replace('/sign-in', { locale: 'vi' });
+        router.replace('/sign-in', { locale: currentLocale });
         localStorage.removeItem('accessToken');
         toast.success("Đăng xuất thành công");
     };
-
 
     return (
         <Sidebar collapsible="icon">

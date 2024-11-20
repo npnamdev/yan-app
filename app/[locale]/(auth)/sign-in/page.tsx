@@ -8,19 +8,20 @@ import { Label } from "@/components/ui/label";
 import { loginUser } from "@/services/api";
 import { toast } from 'sonner';
 import { Link, useRouter } from '@/i18n/routing';
-import { useTranslations } from 'next-intl'; // Or your preferred i18n hook
+import { useLocale, useTranslations } from 'next-intl'; 
 
 export default function SignInPage() {
     const [email, setEmail] = useState('root@doman.com');
     const [password, setPassword] = useState('root123456');
     const router = useRouter();
-    const t = useTranslations('signIn'); // Namespace for translations
+    const t = useTranslations('signIn');
+    const currentLocale = useLocale();
 
     const handleLogin = async () => {
         try {
             const res: any = await loginUser(email, password);
             if (res && res.status === "success") {
-                router.replace('/manage', { locale: 'vi' });
+                router.replace('/manage', { locale: currentLocale });
                 localStorage.setItem('accessToken', res.accessToken);
                 toast.success(t('loginSuccess'));
             } else {
