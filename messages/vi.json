@@ -9,6 +9,7 @@
     },
     "menu": {
         "Home": "Trang chủ",
+        "manage": "Quản lý",
         "statisticsReports": "Thống kê & Báo cáo",
         "courseManagement": "Quản lý khóa học",
         "courseList": "Danh sách khóa học",
@@ -46,5 +47,41 @@
         "partners": "Đối tác",
         "footer": "Chân trang",
         "libraryManagement": "Quản lý thư viện"
+    },
+    "signIn": {
+        "loginTitle": "Đăng nhập",
+        "loginDescription": "Nhập email của bạn bên dưới để đăng nhập",
+        "emailLabel": "Email",
+        "emailPlaceholder": "m@example.com",
+        "passwordLabel": "Mật khẩu",
+        "forgotPassword": "Quên mật khẩu?",
+        "signInButton": "Đăng nhập",
+        "signInWithGoogle": "Đăng nhập với Google",
+        "noAccount": "Chưa có tài khoản?",
+        "signUp": "Đăng ký",
+        "loginSuccess": "Đăng nhập thành công",
+        "loginFailed": "Đăng nhập thất bại",
+        "systemError": "Lỗi hệ thống!"
+    },
+    "signUp": {
+        "title": "Đăng ký",
+        "description": "Tạo tài khoản của bạn bằng cách nhập thông tin dưới đây.",
+        "fullNameLabel": "Họ và tên",
+        "fullNamePlaceholder": "Nguyễn Văn A",
+        "emailLabel": "Email",
+        "emailPlaceholder": "m@example.com",
+        "passwordLabel": "Mật khẩu",
+        "passwordPlaceholder": "********",
+        "confirmPasswordLabel": "Xác nhận mật khẩu",
+        "confirmPasswordPlaceholder": "********",
+        "signUpButton": "Đăng ký",
+        "signUpWithGoogle": "Đăng ký với Google",
+        "alreadyHaveAccount": "Đã có tài khoản?",
+        "signInLink": "Đăng nhập",
+        "fillAllFields": "Vui lòng nhập đầy đủ các trường!",
+        "passwordMismatch": "Mật khẩu không khớp!",
+        "registrationSuccess": "Đăng ký thành công!",
+        "registrationFailed": "Đăng ký thất bại. Vui lòng thử lại.",
+        "systemError": "Lỗi hệ thống!"
     }
 }

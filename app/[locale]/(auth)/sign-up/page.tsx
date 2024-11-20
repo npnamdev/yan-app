@@ -8,6 +8,7 @@ import { Label } from "@/components/ui/label";
 import { toast } from 'sonner';
 import { registerUser } from '@/services/api';
 import { Link, useRouter } from '@/i18n/routing';
+import { useTranslations } from 'next-intl'; // Or your i18n library
 
 export default function SignUpPage() {
   const [username, setUsername] = useState('');
@@ -15,25 +16,29 @@ export default function SignUpPage() {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const router = useRouter();
+  const t = useTranslations('signUp'); // Namespace for translations
 
   const handleRegister = async () => {
-    if (!username && !email && !password && !confirmPassword) {
-      toast.error('Vui lòng nhập đủ các trường thông tin!');
+    if (!username || !email || !password || !confirmPassword) {
+      toast.error(t('fillAllFields'));
+      return;
     }
 
     if (password !== confirmPassword) {
-      toast.error('Mật khẩu không trùng nhau!');
+      toast.error(t('passwordMismatch'));
       return;
     }
 
     try {
       const res: any = await registerUser(username, email, password);
-      if (res && res.status == "success") {
-        toast.success("Đăng ký thành công");
+      if (res && res.status === "success") {
+        toast.success(t('registrationSuccess'));
         router.replace('/sign-in', { locale: 'vi' });
+      } else {
+        toast.error(t('registrationFailed'));
       }
     } catch (error) {
-      toast.error('Registration failed. Please try again.');
+      toast.error(t('systemError'));
     }
   };
 
@@ -41,68 +46,68 @@ export default function SignUpPage() {
     <div className="flex bg-gray-100 h-dvh lg:h-screen w-full items-center justify-center px-4 bg-[url('https://hachium.com/wp-content/uploads/2024/02/grid-1024x671.png')] bg-cover">
       <Card className="w-full mx-auto lg:max-w-sm">
         <CardHeader>
-          <CardTitle className="text-2xl">Sign Up</CardTitle>
+          <CardTitle className="text-2xl">{t('title')}</CardTitle>
           <CardDescription>
-            Create your account by entering the information below.
+            {t('description')}
           </CardDescription>
         </CardHeader>
         <CardContent>
           <div className="grid gap-4">
             <div className="grid gap-2">
-              <Label htmlFor="name">Full Name</Label>
+              <Label htmlFor="name">{t('fullNameLabel')}</Label>
               <Input
                 id="name"
                 type="text"
-                placeholder="John Doe"
+                placeholder={t('fullNamePlaceholder')}
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
                 required
               />
             </div>
             <div className="grid gap-2">
-              <Label htmlFor="email">Email</Label>
+              <Label htmlFor="email">{t('emailLabel')}</Label>
               <Input
                 id="email"
                 type="email"
-                placeholder="m@example.com"
+                placeholder={t('emailPlaceholder')}
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
               />
             </div>
             <div className="grid gap-2">
-              <Label htmlFor="password">Password</Label>
+              <Label htmlFor="password">{t('passwordLabel')}</Label>
               <Input
                 id="password"
                 type="password"
-                placeholder="********"
+                placeholder={t('passwordPlaceholder')}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
               />
             </div>
             <div className="grid gap-2">
-              <Label htmlFor="confirm-password">Confirm Password</Label>
+              <Label htmlFor="confirm-password">{t('confirmPasswordLabel')}</Label>
               <Input
                 id="confirm-password"
                 type="password"
-                placeholder="********"
+                placeholder={t('confirmPasswordPlaceholder')}
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
                 required
               />
             </div>
-            <Button type="submit" className="w-full" onClick={() => handleRegister()}>
-              Sign Up
+            <Button type="submit" className="w-full" onClick={handleRegister}>
+              {t('signUpButton')}
             </Button>
             <Button variant="outline" className="w-full">
-              Sign up with Google
+              {t('signUpWithGoogle')}
             </Button>
           </div>
           <div className="mt-4 text-center text-sm">
-            Already have an account?{" "}
+            {t('alreadyHaveAccount')}{" "}
             <Link href="/sign-in" className="underline">
-              Sign In
+              {t('signInLink')}
             </Link>
           </div>
         </CardContent>
