@@ -1,7 +1,7 @@
-export default function NotFound() {
+export default function Loading() {
     return (
         <div className="h-dvh bg-white w-full flex justify-center items-center">
-            NotFound page
+            Loading page
         </div>
     )
 }
