@@ -8,6 +8,7 @@ interface User {
     };
     isActive: Boolean;
     createdAt: string;
+    updatedAt: string;
 }
 
 interface Permissions {

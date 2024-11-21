@@ -9,12 +9,14 @@ import { toast } from 'sonner';
 import { registerUser } from '@/services/api';
 import { Link, useRouter } from '@/i18n/routing';
 import { useLocale, useTranslations } from 'next-intl';
+import { Loader2 } from 'lucide-react';
 
 export default function SignUpPage() {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [isLoading, setIsLoading] = useState(false); // Thêm trạng thái loading
   const router = useRouter();
   const t = useTranslations('signUp');
   const currentLocale = useLocale();
@@ -30,6 +32,7 @@ export default function SignUpPage() {
       return;
     }
 
+    setIsLoading(true); // Khi bắt đầu xử lý đăng ký
     try {
       const res: any = await registerUser(username, email, password);
       if (res && res.status === "success") {
@@ -40,8 +43,13 @@ export default function SignUpPage() {
       }
     } catch (error) {
       toast.error(t('systemError'));
+    } finally {
+      setIsLoading(false); // Khi hoàn thành hoặc gặp lỗi
     }
   };
+
+  // Kiểm tra nếu có đủ dữ liệu và không trong trạng thái loading
+  const isButtonDisabled = !username || !email || !password || !confirmPassword || isLoading;
 
   return (
     <div className="flex bg-gray-100 h-dvh lg:h-screen w-full items-center justify-center px-4 bg-[url('https://hachium.com/wp-content/uploads/2024/02/grid-1024x671.png')] bg-cover">
@@ -98,8 +106,20 @@ export default function SignUpPage() {
                 required
               />
             </div>
-            <Button type="submit" className="w-full" onClick={handleRegister}>
-              {t('signUpButton')}
+            <Button
+              type="submit"
+              className="w-full"
+              onClick={handleRegister}
+              disabled={isButtonDisabled}
+            >
+              {isLoading ? (
+                <>
+                <Loader2 className="animate-spin" />
+                {t('signUpButton')}
+                </>
+              ) : (
+                t('signUpButton')
+              )}
             </Button>
             <Button variant="outline" className="w-full">
               {t('signUpWithGoogle')}

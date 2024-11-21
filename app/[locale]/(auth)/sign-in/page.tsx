@@ -8,16 +8,19 @@ import { Label } from "@/components/ui/label";
 import { loginUser } from "@/services/api";
 import { toast } from 'sonner';
 import { Link, useRouter } from '@/i18n/routing';
-import { useLocale, useTranslations } from 'next-intl'; 
+import { useLocale, useTranslations } from 'next-intl';
+import { Loader2 } from 'lucide-react';
 
 export default function SignInPage() {
     const [email, setEmail] = useState('root@doman.com');
     const [password, setPassword] = useState('root123456');
+    const [isLoading, setIsLoading] = useState(false);
     const router = useRouter();
     const t = useTranslations('signIn');
     const currentLocale = useLocale();
 
     const handleLogin = async () => {
+        setIsLoading(true);
         try {
             const res: any = await loginUser(email, password);
             if (res && res.status === "success") {
@@ -29,8 +32,13 @@ export default function SignInPage() {
             }
         } catch (error) {
             toast.error(t('systemError'));
+        } finally {
+            setIsLoading(false);
         }
     };
+
+    // Kiểm tra nút "disabled"
+    const isButtonDisabled = !email || !password || isLoading;
 
     return (
         <div className="flex bg-gray-100 h-dvh lg:h-screen w-full items-center justify-center px-4 bg-[url('https://hachium.com/wp-content/uploads/2024/02/grid-1024x671.png')] bg-cover">
@@ -69,8 +77,19 @@ export default function SignInPage() {
                                 required
                             />
                         </div>
-                        <Button className="w-full" onClick={handleLogin}>
-                            {t('signInButton')}
+                        <Button
+                            className="w-full"
+                            onClick={handleLogin}
+                            disabled={isButtonDisabled}
+                        >
+                            {isLoading ? (
+                                <>
+                                    <Loader2 className="animate-spin" />
+                                    {t('signInButton')}
+                                </>
+                            ) : (
+                                t('signInButton')
+                            )}
                         </Button>
                         <Button variant="outline" className="w-full">
                             {t('signInWithGoogle')}

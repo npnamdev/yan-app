@@ -216,7 +216,10 @@ export default function UserAccountsPage() {
                                 <StatusFilter label="Vai trò" options={roleOptions} />
                             </TableHead>
                             <TableHead className="text-black px-4 h-[50px] font-bold text-[13px]">
-                                <StatusFilter label="Thời gian" options={dateOptions} />
+                                <StatusFilter label="Ngày tạo" options={dateOptions} />
+                            </TableHead>
+                            <TableHead className="text-black px-4 h-[50px] font-bold text-[13px]">
+                                <StatusFilter label="Ngày cập nhật" options={dateOptions} />
                             </TableHead>
                             <TableHead className="text-black px-4 h-[50px] font-bold text-[13px]"></TableHead>
                         </TableRow>
@@ -236,7 +239,7 @@ export default function UserAccountsPage() {
                                     </TableCell>
                                     <TableCell className="h-[50px] px-4 cursor-pointer whitespace-nowrap">
                                         <div className="flex items-center gap-2">
-                                            <Image className="w-7 h-7 rounded-full" src="https://lineone.piniastudio.com/images/avatar/avatar-1.jpg" width={50} height={50} alt="dev" />
+                                            <Image className="w-7 h-7 rounded-lg" src="https://lineone.piniastudio.com/images/avatar/avatar-6.jpg" width={50} height={50} alt="dev" />
                                             <h3 className="font-bold text-[13px] whitespace-nowrap mr-4">{user.username}</h3>
                                         </div>
                                     </TableCell>
@@ -250,6 +253,7 @@ export default function UserAccountsPage() {
                                         {user?.role?.name === 'admin' ? 'Quản trị viên' : user?.role?.name === 'user' ? 'Học viên' : user?.role?.name}
                                     </TableCell>
                                     <TableCell className="h-[50px] px-4 cursor-pointer whitespace-nowrap">{moment(user.createdAt).subtract(10, 'days').calendar()}</TableCell>
+                                    <TableCell className="h-[50px] px-4 cursor-pointer whitespace-nowrap">{moment(user.updatedAt).subtract(10, 'days').calendar()}</TableCell>
                                     <TableCell className="h-[50px] px-4 cursor-pointer whitespace-nowrap">
                                         <UserActionMenu options={menuOptions} userID={user?._id} />
                                     </TableCell>
