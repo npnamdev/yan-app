@@ -83,5 +83,11 @@
         "registrationSuccess": "Đăng ký thành công!",
         "registrationFailed": "Đăng ký thất bại. Vui lòng thử lại.",
         "systemError": "Lỗi hệ thống!"
+    },
+    "NotFound": {
+        "404Title": "404",
+        "missingMessage": "Trang này không tồn tại.",
+        "sorryMessage": "Xin lỗi, chúng tôi không thể tìm thấy trang này. Hãy khám phá nhiều nội dung thú vị trên trang chủ.",
+        "backToHome": "Quay lại Trang chủ"
     }
 }

@@ -5,7 +5,8 @@ import { NextIntlClientProvider } from 'next-intl';
 import { getMessages } from 'next-intl/server';
 import { notFound } from 'next/navigation';
 import { routing } from '@/i18n/routing';
-import { ThemeProvider } from "@/components/theme-provider"
+import { ThemeProvider } from "@/components/theme-provider";
+import NextTopLoader from 'nextjs-toploader';
 
 export const metadata: Metadata = {
   title: "Trí Tuệ Nhân Tạo - Chìa Khóa Của Cuộc Cách Mạng Công Nghệ",
@@ -34,6 +35,7 @@ export default async function LocaleLayout({ children, params: { locale } }: { c
             enableSystem
             disableTransitionOnChange
           >
+            <NextTopLoader color="#2F01FF" showSpinner={false} height={2}/>
             {children}
             <Toaster />
           </ThemeProvider>
