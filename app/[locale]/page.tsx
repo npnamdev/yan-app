@@ -181,7 +181,7 @@ const HomePage: React.FC = () => {
           {testimonials.map((testimonial) => (
             <div key={testimonial.id} className="border p-4 rounded-lg text-center">
               <img src={testimonial.image} alt={testimonial.name} className="w-16 h-16 rounded-full mx-auto" />
-              <p className="mt-2 italic">"{testimonial.feedback}"</p>
+              <p className="mt-2 italic">{testimonial.feedback}</p>
               <h4 className="mt-2 font-semibold">{testimonial.name}</h4>
             </div>
           ))}
