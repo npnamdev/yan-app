@@ -87,6 +87,14 @@ const topics = [
   },
 ];
 
+interface CourseCardProps {
+  course: {
+    title: string;
+    instructor: string;
+    price: string;
+    image: string;
+  };
+}
 
 const CourseCard: React.FC<CourseCardProps> = ({ course }) => {
   return (
