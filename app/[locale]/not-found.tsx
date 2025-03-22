@@ -14,7 +14,7 @@ export default function NotFound() {
                     <p className="mb-4 text-3xl tracking-tight font-bold text-gray md:text-4xl dark:text-white">
                         {t('missingMessage')}
                     </p>
-                    <p className="mb-4 text-lg font-light text-gray-500 dark:text-gray-400">
+                    <p className="mb-4 text-md font-light">
                         {t('sorryMessage')}
                     </p>
                     <Link

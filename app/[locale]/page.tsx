@@ -131,30 +131,55 @@ const CourseCard: React.FC<{ course: (typeof courses)[0] }> = ({ course }) => (
 const HomePage: React.FC = () => {
   return (
     <div className="flex flex-col items-center">
-      <header className="w-full bg-white shadow-md py-4 px-6 flex items-center justify-between fixed top-0 left-0 z-50">
-        <h1 className="text-2xl font-bold text-blue-600">Learnify</h1>
-        <nav className="flex-1">
-          <ul className="flex justify-center space-x-6">
-            <li><Link href="/" className="text-gray-700 hover:text-blue-500">Trang chủ</Link></li>
-            <li><Link href="/courses" className="text-gray-700 hover:text-blue-500">Khóa học</Link></li>
-            <li><Link href="/about" className="text-gray-700 hover:text-blue-500">Về chúng tôi</Link></li>
-            <li><Link href="/contact" className="text-gray-700 hover:text-blue-500">Liên hệ</Link></li>
-          </ul>
-        </nav>
-        <div className="flex space-x-4">
-          <Button variant="outline">Đăng ký</Button>
-          <Button>Đăng nhập</Button>
-          <Button asChild>
-            <Link href="/manage">Trang quản trị</Link>
-          </Button>
+      <header className="w-full bg-white shadow-md  fixed top-0 left-0 z-50">
+        <div className="max-w-6xl mx-auto py-4 px-6 flex items-center justify-between">
+          <h1 className="text-2xl font-extrabold text-primary">Learnify</h1>
+          <nav className="flex-1">
+            <ul className="flex justify-center space-x-6">
+              <li><Link href="/" className="text-[15px] font-semibold hover:text-primary">Trang chủ</Link></li>
+              <li><Link href="/courses" className="text-[15px] font-semibold hover:text-primary">Khóa học</Link></li>
+              <li><Link href="/about" className="text-[15px] font-semibold hover:text-primary">Về chúng tôi</Link></li>
+              <li><Link href="/contact" className="text-[15px] font-semibold hover:text-primary">Liên hệ</Link></li>
+            </ul>
+          </nav>
+          <div className="flex space-x-4">
+            <Button variant="outline">
+              <Link href="/sign-in">Đăng ký</Link>
+            </Button>
+            <Button asChild>
+              <Link href="/sign-in">Đăng nhập</Link>
+            </Button>
+            <Button asChild>
+              <Link href="/manage">Trang quản trị</Link>
+            </Button>
+          </div>
         </div>
       </header>
 
-      <section className="w-full bg-primary text-white h-[500px] flex flex-col justify-center items-center mt-16">
-        <h1 className="text-5xl font-bold">Học tập mọi lúc, mọi nơi</h1>
-        <p className="mt-4 text-lg">Khám phá hàng ngàn khóa học chất lượng cao</p>
-        <button className="mt-6 bg-white text-blue-600 px-6 py-3 rounded-lg font-semibold">Bắt đầu ngay</button>
+
+      <section
+        className="relative w-full h-[500px] flex flex-col justify-center items-center mt-16 bg-cover bg-center text-white"
+        style={{
+          backgroundImage: "url('https://images.pexels.com/photos/4144923/pexels-photo-4144923.jpeg')",
+        }}
+      >
+        {/* Lớp phủ */}
+        <div className="absolute inset-0 bg-black bg-opacity-30"></div>
+
+        {/* Nội dung */}
+        <div className="relative text-center max-w-2xl px-4">
+          <h1 className="text-5xl font-bold">Học tập mọi lúc, mọi nơi</h1>
+          <p className="mt-4 text-md">
+            Cùng Learnify mở ra cánh cửa tri thức với hàng ngàn khóa học chất lượng cao,
+            giúp bạn phát triển kỹ năng, nâng cao sự nghiệp và chinh phục ước mơ.
+            Học online mọi lúc, mọi nơi, theo lịch trình của bạn.
+          </p>
+          <Button className="mt-6" size={"lg"}>
+            Bắt đầu học ngay
+          </Button>
+        </div>
       </section>
+
 
       <section className="w-full max-w-6xl py-12">
         <h2 className="text-3xl font-semibold mb-6 text-center">Khóa học nổi bật</h2>
@@ -163,19 +188,21 @@ const HomePage: React.FC = () => {
         </div>
       </section>
 
-      <section className="w-full max-w-6xl py-12 bg-gray-200">
-        <h2 className="text-3xl font-semibold mb-6 text-center">Chủ đề khóa học</h2>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-          {topics.map((topic) => (
-            <div key={topic.id} className="text-center">
-              <img src={topic.image} alt={topic.name} className="w-32 h-32 object-cover rounded-full mx-auto" />
-              <p className="mt-2 font-semibold">{topic.name}</p>
-            </div>
-          ))}
+      <section className="w-full py-14 bg-gray-100">
+        <div className="max-w-6xl mx-auto">
+          <h2 className="text-3xl font-semibold mb-10 text-center">Chủ đề khóa học</h2>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+            {topics.map((topic) => (
+              <div key={topic.id} className="text-center">
+                <img src={topic.image} alt={topic.name} className="w-28 h-28 object-cover rounded-full mx-auto" />
+                <p className="mt-6 font-semibold">{topic.name}</p>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
-      <section className="w-full max-w-6xl py-12">
+      <section className="w-full max-w-6xl py-16">
         <h2 className="text-3xl font-semibold mb-6 text-center">Cảm nhận học viên</h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {testimonials.map((testimonial) => (
@@ -188,16 +215,57 @@ const HomePage: React.FC = () => {
         </div>
       </section>
 
-      <footer className="w-full bg-gray-900 text-white py-6 mt-12">
-        <div className="max-w-6xl mx-auto text-center">
-          <p className="text-lg font-semibold">Learnify - Học tập trực tuyến</p>
-          <p className="mt-2">Địa chỉ: 123 Đường ABC, Quận 1, TP. Hồ Chí Minh</p>
-          <p>Email: support@learnify.com | Hotline: 0123 456 789</p>
-        </div>
-        <div className="text-center mt-4 text-gray-400">
-          © 2024 Learnify. All rights reserved.
+      <footer className="w-full bg-gray-900 text-white py-12">
+        <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-8 px-6">
+          {/* Cột 1: Thông tin công ty */}
+          <div>
+            <h3 className="text-xl font-semibold mb-4">Về Learnify</h3>
+            <p className="text-gray-400">
+              Learnify là nền tảng học trực tuyến hàng đầu, cung cấp các khóa học chất lượng từ chuyên gia.
+            </p>
+            <p className="mt-4 text-gray-400">© 2024 Learnify. All rights reserved.</p>
+          </div>
+
+          {/* Cột 2: Hỗ trợ */}
+          <div>
+            <h3 className="text-xl font-semibold mb-4">Hỗ trợ</h3>
+            <ul className="space-y-2">
+              <li><a href="#" className="text-gray-400 hover:text-white">Câu hỏi thường gặp</a></li>
+              <li><a href="#" className="text-gray-400 hover:text-white">Chính sách bảo mật</a></li>
+              <li><a href="#" className="text-gray-400 hover:text-white">Điều khoản sử dụng</a></li>
+              <li><a href="#" className="text-gray-400 hover:text-white">Liên hệ hỗ trợ</a></li>
+            </ul>
+          </div>
+
+          {/* Cột 3: Tài nguyên */}
+          <div>
+            <h3 className="text-xl font-semibold mb-4">Tài nguyên</h3>
+            <ul className="space-y-2">
+              <li><a href="#" className="text-gray-400 hover:text-white">Blog</a></li>
+              <li><a href="#" className="text-gray-400 hover:text-white">Hướng dẫn sử dụng</a></li>
+              <li><a href="#" className="text-gray-400 hover:text-white">Chương trình ưu đãi</a></li>
+              <li><a href="#" className="text-gray-400 hover:text-white">Cộng đồng</a></li>
+            </ul>
+          </div>
+
+          {/* Cột 4: Liên hệ & mạng xã hội */}
+          <div>
+            <h3 className="text-xl font-semibold mb-4">Liên hệ</h3>
+            <p className="text-gray-400">Email: support@learnify.com</p>
+            <p className="text-gray-400 mt-2">Hotline: 0123 456 789</p>
+            <p className="text-gray-400 mt-2">Địa chỉ: 123 Đường ABC, Quận 1, TP. Hồ Chí Minh</p>
+
+            <h3 className="text-xl font-semibold mt-6 mb-4">Kết nối với chúng tôi</h3>
+            <div className="flex space-x-4">
+              <a href="#" className="text-gray-400 hover:text-white"><i className="fab fa-facebook-f"></i></a>
+              <a href="#" className="text-gray-400 hover:text-white"><i className="fab fa-twitter"></i></a>
+              <a href="#" className="text-gray-400 hover:text-white"><i className="fab fa-linkedin-in"></i></a>
+              <a href="#" className="text-gray-400 hover:text-white"><i className="fab fa-youtube"></i></a>
+            </div>
+          </div>
         </div>
       </footer>
+
     </div>
   );
 };
