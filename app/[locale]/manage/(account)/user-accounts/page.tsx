@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import useSWR from "swr";
-import { ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight, ChevronsUpDown, Clipboard, Download, ScanEye, Search, SquarePen, Trash, Upload } from "lucide-react";
+import { ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight, ChevronsUpDown, Clipboard, Download, ScanEye, Search, SquarePen, Trash, Upload, Plus } from "lucide-react";
 import Papa from 'papaparse';
 import axios from 'axios';
 import Image from "next/image";
@@ -18,6 +18,17 @@ import { Command, CommandGroup, CommandItem, CommandList } from "@/components/ui
 import { Pagination, PaginationContent, PaginationItem } from "@/components/ui/pagination";
 import { UserActionMenu } from "@/components/UserActionMenu";
 import { ActionBtn } from "@/components/ActionBtn";
+
+import {
+    Dialog,
+    DialogContent,
+    DialogClose,
+    DialogFooter,
+    DialogHeader,
+    DialogTitle,
+    DialogTrigger,
+} from "@/components/ui/dialog"
+import { Label } from "@/components/ui/label"
 
 export default function UserAccountsPage() {
     const [currentPage, setCurrentPage] = useState(1);
@@ -190,15 +201,36 @@ export default function UserAccountsPage() {
                     <div className="relative hidden md:flex items-center">
                         <Search className="absolute left-3 text-gray-600" size={18} strokeWidth={1.5} />
                         <Input
-                            className="w-[360px] px-5 pl-10"
+                            className="w-[380px] px-5 pl-10"
                             type="text"
                             placeholder="Tìm kiếm người dùng..."
                             value={searchTerm}
                             onChange={(e) => setSearchTerm(e.target.value)}
                         />
                     </div>
-                    <div className="flex items-center gap-2 w-full h-full justify-between lg:justify-end">
+                    <div className="flex items-center gap-2.5 w-full h-full justify-between lg:justify-end">
                         <ActionBtn label="Hành động" options={actionOptions} selectedUsers={selectedUsers} />
+                        <Dialog>
+                            <DialogTrigger asChild>
+                                <Button className="px-2.5 gap-1 text-[13.5px]">
+                                    <Plus strokeWidth="1.5" />
+                                    Thêm người dùng</Button>
+                            </DialogTrigger>
+                            <DialogContent className="sm:max-w-[620px] p-0">
+                                <DialogHeader className="border-b h-[50px] flex justify-center px-4">
+                                    <DialogTitle className="text-[16px] font-bold">Thêm người dùng mới</DialogTitle>
+                                </DialogHeader>
+                                <div className="py-4 px-4">
+                                    modal content
+                                </div>
+                                <DialogFooter className="border-t h-[55px] flex items-center justify-center px-4">
+                                    <DialogClose asChild>
+                                        <Button variant={"outline"}>Trở lại</Button>
+                                    </DialogClose>
+                                    <Button>Thêm</Button>
+                                </DialogFooter>
+                            </DialogContent>
+                        </Dialog>
                     </div>
                 </div>
                 <Table className="w-full">

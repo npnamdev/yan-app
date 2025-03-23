@@ -29,7 +29,7 @@ export function ActionBtn({ label, options, selectedUsers }: ActionBtnProps) {
                 <Button
                     disabled={selectedUsers.length <= 0}
                     variant="outline"
-                    className="font-semibold text-[13.5px] flex gap-2 px-2"
+                    className="font-semibold text-[13.5px] flex gap-2 px-2.5"
                 >
                     <Wrench size={16} strokeWidth={1.5} />
                     {label}
