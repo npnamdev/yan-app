@@ -35,9 +35,9 @@ export default function LocalSwitcher() {
     return (
         <Popover open={open} onOpenChange={setOpen}>
             <PopoverTrigger asChild>
-                <Button variant="outline" aria-expanded={open} className="icon px-3 mr-3">
+                <Button variant="outline" aria-expanded={open} className="icon px-3 gap-1.5 flex justify-start">
                     {options.find((option) => option.value === currentLocale)?.icon}
-                    {/* <span className="text-sm font-medium">{options.find((option) => option.value === currentLocale)?.label}</span> */}
+                    <span className="text-sm font-medium">{options.find((option) => option.value === currentLocale)?.label}</span>
                 </Button>
             </PopoverTrigger>
             <PopoverContent side="bottom" className="w-full p-0 rounded-md">
@@ -47,14 +47,14 @@ export default function LocalSwitcher() {
                             {options.map((option) => (
                                 <CommandItem
                                     key={option.value}
-                                    className="flex items-center gap-1.5 whitespace-nowrap cursor-pointer"
+                                    className="flex w-full items-center gap-1.5 whitespace-nowrap cursor-pointer"
                                     onSelect={() => {
                                         handleLocaleChange(option.value);
                                         setOpen(false);
                                     }}
                                 >
                                     {option.icon}
-                                    {/* {option.label} */}
+                                    {option.label}
                                 </CommandItem>
                             ))}
                         </CommandGroup>

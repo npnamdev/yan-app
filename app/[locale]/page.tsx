@@ -159,10 +159,7 @@ const HomePage: React.FC = () => {
           backgroundImage: "url('https://images.pexels.com/photos/4144923/pexels-photo-4144923.jpeg')",
         }}
       >
-        {/* Lớp phủ */}
         <div className="absolute inset-0 bg-black bg-opacity-30"></div>
-
-        {/* Nội dung */}
         <div className="relative text-center max-w-2xl px-4">
           <h1 className="text-5xl font-bold">Học tập mọi lúc, mọi nơi</h1>
           <p className="mt-4 text-md">

@@ -1,8 +1,8 @@
 import { Link } from "@/i18n/routing";
-import { useTranslations } from "next-intl"; // or your chosen i18n library
+import { useTranslations } from "next-intl";
 
 export default function NotFound() {
-    const t = useTranslations('NotFound'); 
+    const t = useTranslations('NotFound');
 
     return (
         <section className="bg-white dark:bg-gray w-full h-dvh flex flex-col items-center justify-center">

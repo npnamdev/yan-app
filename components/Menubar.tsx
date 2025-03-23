@@ -98,37 +98,11 @@ export default function Menubar() {
                 url: "/manage/liblarys",
                 icon: SwatchBook,
             },
-            {
-                title: t('supportCenter'),
-                url: "#",
-                icon: CircleHelp,
-                items: [
-                    { title: t('activationCodesSupport'), url: "/manage/activation-code" },
-                    { title: t('transferCodes'), url: "/manage/transfer-code" },
-                ],
-            },
         ],
         settings: [
             { name: t('displaySettings'), url: "/manage/display-settings", icon: SlidersVertical },
             { name: t('systemSettings'), url: "/manage/system-settings", icon: Settings },
             { name: t('websiteResources'), url: "/manage/website-resources", icon: Package },
-        ],
-        teams: [
-            {
-                name: "Acme Inc",
-                logo: GalleryVerticalEnd,
-                plan: "Enterprise",
-            },
-            {
-                name: "Acme Corp.",
-                logo: AudioWaveform,
-                plan: "Startup",
-            },
-            {
-                name: "Evil Corp.",
-                logo: Command,
-                plan: "Free",
-            },
         ],
     };
 
@@ -156,8 +130,8 @@ export default function Menubar() {
 
     return (
         <Sidebar collapsible="icon">
-            <SidebarHeader className="px-3.5 border-b bg-white flex justify-center h-[65px]">
-                <TeamSwitcher teams={data.teams} />
+            <SidebarHeader className="px-6 border-b bg-white flex justify-center h-[60px]">
+                <h1 className="text-[27px] font-black text-primary">Learnify</h1>
             </SidebarHeader>
             <SidebarContent className="px-2 bg-white gap-0">
                 <SidebarGroup>
@@ -304,28 +278,6 @@ export default function Menubar() {
                                         </div>
                                     </div>
                                 </DropdownMenuLabel>
-                                <DropdownMenuSeparator />
-                                <DropdownMenuGroup>
-                                    <DropdownMenuItem>
-                                        <Sparkles />
-                                        Nâng cấp lên Pro
-                                    </DropdownMenuItem>
-                                </DropdownMenuGroup>
-                                <DropdownMenuSeparator />
-                                <DropdownMenuGroup>
-                                    <DropdownMenuItem>
-                                        <BadgeCheck />
-                                        Tài khoản
-                                    </DropdownMenuItem>
-                                    <DropdownMenuItem>
-                                        <CreditCard />
-                                        Thanh toán
-                                    </DropdownMenuItem>
-                                    <DropdownMenuItem>
-                                        <Bell />
-                                        Thông báo
-                                    </DropdownMenuItem>
-                                </DropdownMenuGroup>
                                 <DropdownMenuSeparator />
                                 <DropdownMenuItem onClick={() => handleLogout()}>
                                     <LogOut />

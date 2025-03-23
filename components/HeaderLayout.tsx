@@ -6,7 +6,7 @@ import { Separator } from "@/components/ui/separator";
 import { usePathname } from "next/navigation";
 import { useSidebar } from "@/components/ui/sidebar";
 import { Button } from "./ui/button";
-import { AlignLeft } from "lucide-react";
+import { AlignLeft, Bell } from "lucide-react";
 import LocalSwitcher from "./LocalSwitcher";
 import { useLocale, useTranslations } from 'next-intl';
 
@@ -41,8 +41,8 @@ export default function HeaderLayout() {
     };
 
     return (
-        <header className="flex justify-between h-[60px] shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-[[data-collapsible=icon]]/sidebar-wrapper:h-12 border-b w-full px-2 sticky top-0 bg-white z-50">
-            <div className="flex items-center gap-2 px-2.5">
+        <header className="flex justify-between h-[60px] shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-[[data-collapsible=icon]]/sidebar-wrapper:h-12 border-b w-full px-5 sticky top-0 bg-white z-50">
+            <div className="flex items-center gap-2">
                 <Button className="lg:hidden mr-1 w-8 h-8" variant="outline" size="icon" onClick={() => toggleSidebar()}>
                     <AlignLeft strokeWidth={1.5} />
                 </Button>
@@ -65,7 +65,12 @@ export default function HeaderLayout() {
                     </BreadcrumbList>
                 </Breadcrumb>
             </div>
-            <LocalSwitcher />
+            <div className="flex items-center gap-2.5">
+                <LocalSwitcher />
+                <Button className="w-9 h-9" variant="outline" size="icon">
+                    <Bell strokeWidth={1.5} />
+                </Button>
+            </div>
         </header>
     );
 }
