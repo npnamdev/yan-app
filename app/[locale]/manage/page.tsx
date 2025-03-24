@@ -1,59 +1,44 @@
 import { BarChatDemo } from "@/components/BarChatDemo";
 import { BarChatDemo2 } from "@/components/BarChatDemo2";
-import { Skeleton } from "@/components/ui/skeleton";
+
+const stats = [
+  {
+    icon: "📈",
+    bgColor: "bg-blue-500",
+    label: "Total Sales",
+    value: "$12,450",
+  },
+  { icon: "👤", bgColor: "bg-green-500", label: "New Users", value: "1,230" },
+  { icon: "🛒", bgColor: "bg-yellow-500", label: "Orders", value: "320" },
+  { icon: "💰", bgColor: "bg-red-500", label: "Revenue", value: "$8,750" },
+];
 
 export default function DashBoardPage() {
-    return (
-        <div className="flex flex-1 flex-col gap-4 py-2 md:py-4 px-4">
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
-                {/* Card 1 */}
-                <div className="flex items-center p-4 bg-white rounded-xl shadow border">
-                    <div className="p-3 bg-blue-500 text-white rounded-lg">
-                        📈
-                    </div>
-                    <div className="ml-4">
-                        <p className="text-gray-500 text-sm">Total Sales</p>
-                        <p className="text-lg font-semibold">$12,450</p>
-                    </div>
-                </div>
-
-                {/* Card 2 */}
-                <div className="flex items-center p-4 bg-white rounded-xl shadow border">
-                    <div className="p-3 bg-green-500 text-white rounded-lg">
-                        👤
-                    </div>
-                    <div className="ml-4">
-                        <p className="text-gray-500 text-sm">New Users</p>
-                        <p className="text-lg font-semibold">1,230</p>
-                    </div>
-                </div>
-
-                {/* Card 3 */}
-                <div className="flex items-center p-4 bg-white rounded-xl shadow border">
-                    <div className="p-3 bg-yellow-500 text-white rounded-lg">
-                        🛒
-                    </div>
-                    <div className="ml-4">
-                        <p className="text-gray-500 text-sm">Orders</p>
-                        <p className="text-lg font-semibold">320</p>
-                    </div>
-                </div>
-
-                {/* Card 4 */}
-                <div className="flex items-center p-4 bg-white rounded-xl shadow border">
-                    <div className="p-3 bg-red-500 text-white rounded-lg">
-                        💰
-                    </div>
-                    <div className="ml-4">
-                        <p className="text-gray-500 text-sm">Revenue</p>
-                        <p className="text-lg font-semibold">$8,750</p>
-                    </div>
-                </div>
+  return (
+    <div className="flex flex-1 flex-col gap-4 py-2 md:py-4 px-4">
+      {/* Cards */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
+        {stats.map((stat, index) => (
+          <div
+            key={index}
+            className="flex items-center py-5 px-4 bg-white rounded-xl shadow border"
+          >
+            <div className={`p-3 ${stat.bgColor} text-white rounded-lg`}>
+              {stat.icon}
             </div>
-            <div className="grid grid-cols-1 lg:grid-cols-[2fr_1fr] gap-2 lg:gap-4">
-                <BarChatDemo />
-                <BarChatDemo2 />
+            <div className="ml-4">
+              <p className="text-gray-500 text-sm">{stat.label}</p>
+              <p className="text-lg font-semibold">{stat.value}</p>
             </div>
-        </div>
-    );
+          </div>
+        ))}
+      </div>
+
+      {/* Charts */}
+      <div className="grid grid-cols-1 lg:grid-cols-[2fr_1fr] gap-2 lg:gap-4">
+        <BarChatDemo />
+        <BarChatDemo2 />
+      </div>
+    </div>
+  );
 }
