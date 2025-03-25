@@ -67,9 +67,9 @@ import { Label } from "@/components/ui/label";
 export default function UserAccountsPage() {
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedUsers, setSelectedUsers] = useState<User[]>([]);
-  const [limit, setLimit] = useState(15);
+  const [limit, setLimit] = useState(13);
   const [open, setOpen] = useState(false);
-  const [value, setValue] = useState("10");
+  const [value, setValue] = useState("13");
   const [searchTerm, setSearchTerm] = useState("");
   const [debouncedSearchTerm, setDebouncedSearchTerm] = useState("");
 
@@ -179,6 +179,7 @@ export default function UserAccountsPage() {
 
   const itemsPerPageOptions = [
     { value: "10", label: "10", action: () => handleLimitChange(10) },
+    { value: "13", label: "13", action: () => handleLimitChange(13) },
     { value: "15", label: "15", action: () => handleLimitChange(15) },
     { value: "20", label: "20", action: () => handleLimitChange(20) },
     { value: "30", label: "30", action: () => handleLimitChange(30) },
@@ -346,18 +347,42 @@ export default function UserAccountsPage() {
                   Thêm người dùng
                 </Button>
               </DialogTrigger>
-              <DialogContent className="sm:max-w-[620px] p-0">
-                <DialogHeader className="border-b h-[50px] flex justify-center px-4">
+              <DialogContent modal={false} className="sm:max-w-[580px] p-0">
+                <DialogHeader className="border-b h-[60px] flex justify-center px-6">
                   <DialogTitle className="text-[16px] font-bold">
                     Thêm người dùng mới
                   </DialogTitle>
                 </DialogHeader>
-                <div className="py-4 px-4">modal content</div>
-                <DialogFooter className="border-t h-[55px] flex items-center justify-center px-4">
+                <div className="py-4 px-6 space-y-4">
+                  <div className="grid gap-2">
+                    <Label htmlFor="fullName">Họ và tên</Label>
+                    <Input id="fullName" placeholder="Nhập họ và tên" />
+                  </div>
+                  <div className="grid gap-2">
+                    <Label htmlFor="email">Email</Label>
+                    <Input id="email" type="email" placeholder="Nhập email" />
+                  </div>
+                  <div className="grid gap-2">
+                    <Label htmlFor="role">Vai trò</Label>
+                    <Input
+                      id="role"
+                      placeholder="Nhập vai trò (Admin, User, ...)"
+                    />
+                  </div>
+                  <div className="grid gap-2">
+                    <Label htmlFor="phone">Đường dẫn ảnh</Label>
+                    <Input
+                      id="avatar"
+                      type="text"
+                      placeholder="Nhập đường dẫn ảnh"
+                    />
+                  </div>
+                </div>
+                <DialogFooter className="border-t h-[60px] flex items-center justify-center px-6 gap-2">
                   <DialogClose asChild>
-                    <Button variant={"outline"}>Trở lại</Button>
+                    <Button variant="outline">Trở lại</Button>
                   </DialogClose>
-                  <Button>Thêm</Button>
+                  <Button>Thêm người dùng</Button>
                 </DialogFooter>
               </DialogContent>
             </Dialog>
