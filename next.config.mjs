@@ -1,5 +1,5 @@
 import createNextIntlPlugin from "next-intl/plugin";
-import withPWA from "next-pwa"; // Import next-pwa
+import withPWA from "next-pwa";
 
 const withNextIntl = createNextIntlPlugin();
 
