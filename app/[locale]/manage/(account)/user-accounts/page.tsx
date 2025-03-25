@@ -347,7 +347,7 @@ export default function UserAccountsPage() {
                   Thêm người dùng
                 </Button>
               </DialogTrigger>
-              <DialogContent modal={false} className="sm:max-w-[580px] p-0">
+              <DialogContent className="sm:max-w-[580px] p-0">
                 <DialogHeader className="border-b h-[60px] flex justify-center px-6">
                   <DialogTitle className="text-[16px] font-bold">
                     Thêm người dùng mới
