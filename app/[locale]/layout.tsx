@@ -38,7 +38,7 @@ export default async function LocaleLayout({
     <html lang={locale} suppressHydrationWarning={true}>
       <head>
         <link rel="manifest" href="/manifest.json" />
-        <meta name="theme-color" content="#000000" />
+        <meta name="theme-color" content="#ffffff" />
       </head>
       <body suppressHydrationWarning={true}>
         <NextIntlClientProvider messages={messages}>
