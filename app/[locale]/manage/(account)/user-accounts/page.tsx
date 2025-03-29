@@ -54,6 +54,16 @@ import { UserActionMenu } from "@/components/UserActionMenu";
 import { ActionBtn } from "@/components/ActionBtn";
 
 import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
+
+import {
   Dialog,
   DialogContent,
   DialogClose,
@@ -63,6 +73,9 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
+import { toast } from "sonner";
+import { useRoles } from "@/hooks/useRoles";
+
 
 export default function UserAccountsPage() {
   const [currentPage, setCurrentPage] = useState(1);
@@ -72,6 +85,13 @@ export default function UserAccountsPage() {
   const [value, setValue] = useState("13");
   const [searchTerm, setSearchTerm] = useState("");
   const [debouncedSearchTerm, setDebouncedSearchTerm] = useState("");
+
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [role, setRole] = useState("");
+  const { roles, loading } = useRoles();
 
   const fetcher = async (url: string): Promise<any> => {
     try {
@@ -107,22 +127,32 @@ export default function UserAccountsPage() {
     }
   );
 
-  const handleCreateUser = async (userData: any) => {
+  const handleAddUser = async () => {
     try {
+      const newUser = { username, email, password, role };
+      console.log("Check data", newUser);
+
       const response = await axios.post(
         "https://api.rock.io.vn/api/v1/users",
-        userData
+        newUser
       );
       if (response) {
         mutate(
           `https://api.rock.io.vn/api/v1/users?page=${currentPage}&limit=${limit}&search=${debouncedSearchTerm}`
         );
-        console.log("User created successfully:", response);
+        toast.success(`User added successfully`);
+        setIsDialogOpen(false);
+        setUsername("");
+        setEmail("");
+        setPassword("");
+        setRole("");
       }
     } catch (error) {
-      console.error("Error:", error);
+      setIsDialogOpen(false);
+      toast.error("Error adding user");
     }
   };
+
 
   const handleDeleteUser = async (userId: string) => {
     try {
@@ -133,10 +163,10 @@ export default function UserAccountsPage() {
         mutate(
           `https://api.rock.io.vn/api/v1/users?page=${currentPage}&limit=${limit}&search=${debouncedSearchTerm}`
         );
-        console.log("User deleted successfully:", response);
+        toast.success(`User deleted successfully`);
       }
     } catch (error) {
-      console.error("Error deleting user:", error);
+      toast.error("Error deleting user");
     }
   };
 
@@ -193,50 +223,13 @@ export default function UserAccountsPage() {
     },
     {
       value: "active",
-      label: "Active",
+      label: "Hoạt động",
       action: () => console.log("active clicked"),
     },
     {
       value: "inactive",
-      label: "Inactive",
+      label: "Không hoạt động",
       action: () => console.log("inactive clicked"),
-    },
-  ];
-
-  const roleOptions = [
-    {
-      value: "default",
-      label: "Default",
-      action: () => console.log("Default clicked"),
-    },
-    {
-      value: "admin",
-      label: "Admin",
-      action: () => console.log("Admin clicked"),
-    },
-    {
-      value: "editor",
-      label: "Editor",
-      action: () => console.log("Editor clicked"),
-    },
-    { value: "user", label: "User", action: () => console.log("User clicked") },
-  ];
-
-  const dateOptions = [
-    {
-      value: "default",
-      label: "Default",
-      action: () => console.log("Default clicked"),
-    },
-    {
-      value: "ascending",
-      label: "Ascending",
-      action: () => console.log("Ascending clicked"),
-    },
-    {
-      value: "descending",
-      label: "Descending",
-      action: () => console.log("Descending clicked"),
     },
   ];
 
@@ -340,7 +333,7 @@ export default function UserAccountsPage() {
               options={actionOptions}
               selectedUsers={selectedUsers}
             />
-            <Dialog>
+            <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen} modal={true}>
               <DialogTrigger asChild>
                 <Button className="px-2.5 gap-1 text-[13.5px]">
                   <Plus strokeWidth="1.5" />
@@ -355,37 +348,62 @@ export default function UserAccountsPage() {
                 </DialogHeader>
                 <div className="py-4 px-6 space-y-4">
                   <div className="grid gap-2">
-                    <Label htmlFor="fullName">Họ và tên</Label>
-                    <Input id="fullName" placeholder="Nhập họ và tên" />
+                    <Label htmlFor="username">Username</Label>
+                    <Input
+                      id="username"
+                      placeholder="Nhập username"
+                      value={username}
+                      onChange={(e) => setUsername(e.target.value)}
+                    />
                   </div>
                   <div className="grid gap-2">
                     <Label htmlFor="email">Email</Label>
-                    <Input id="email" type="email" placeholder="Nhập email" />
+                    <Input
+                      id="email"
+                      type="email"
+                      placeholder="Nhập email"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                    />
+                  </div>
+                  <div className="grid gap-2">
+                    <Label htmlFor="password">Password</Label>
+                    <Input
+                      id="password"
+                      type="text"
+                      placeholder="Nhập mật khẩu"
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                    />
                   </div>
                   <div className="grid gap-2">
                     <Label htmlFor="role">Vai trò</Label>
-                    <Input
-                      id="role"
-                      placeholder="Nhập vai trò (Admin, User, ...)"
-                    />
-                  </div>
-                  <div className="grid gap-2">
-                    <Label htmlFor="phone">Đường dẫn ảnh</Label>
-                    <Input
-                      id="avatar"
-                      type="text"
-                      placeholder="Nhập đường dẫn ảnh"
-                    />
+                    <Select onValueChange={(value) => setRole(value)}>
+                      <SelectTrigger className="w-full">
+                        <SelectValue placeholder="Chọn vai trò" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectGroup>
+                          <SelectLabel>Vai trò</SelectLabel>
+                          {roles.map((r) => (
+                            <SelectItem key={r._id} value={r._id}>
+                              {r.name}
+                            </SelectItem>
+                          ))}
+                        </SelectGroup>
+                      </SelectContent>
+                    </Select>
                   </div>
                 </div>
                 <DialogFooter className="border-t h-[60px] flex items-center justify-center px-6 gap-2">
                   <DialogClose asChild>
                     <Button variant="outline">Trở lại</Button>
                   </DialogClose>
-                  <Button>Thêm người dùng</Button>
+                  <Button onClick={handleAddUser}>Thêm người dùng</Button>
                 </DialogFooter>
               </DialogContent>
             </Dialog>
+
           </div>
         </div>
         <Table className="w-full">
@@ -407,13 +425,13 @@ export default function UserAccountsPage() {
                 <StatusFilter label="Trạng thái" options={statusOptions} />
               </TableHead>
               <TableHead className="text-black px-4 h-[50px] font-bold text-[13px]">
-                <StatusFilter label="Vai trò" options={roleOptions} />
+                Vai trò
               </TableHead>
               <TableHead className="text-black px-4 h-[50px] font-bold text-[13px]">
-                <StatusFilter label="Ngày tạo" options={dateOptions} />
+                Ngày tạo
               </TableHead>
               <TableHead className="text-black px-4 h-[50px] font-bold text-[13px]">
-                <StatusFilter label="Ngày cập nhật" options={dateOptions} />
+                Ngày cập nhật
               </TableHead>
               <TableHead className="text-black px-4 h-[50px] font-bold text-[13px]"></TableHead>
             </TableRow>
@@ -456,19 +474,14 @@ export default function UserAccountsPage() {
                   </TableCell>
                   <TableCell className="h-[50px] px-4 cursor-pointer whitespace-nowrap">
                     <div
-                      className={`rounded-lg px-2 py-1 text-xs w-min text-primary-foreground ${
-                        user.isActive ? "bg-[#3eca65]" : "bg-[#f45d5d]"
-                      }`}
+                      className={`rounded-lg px-2 py-1 text-xs w-min text-primary-foreground ${user.isActive ? "bg-[#3eca65]" : "bg-[#f45d5d]"
+                        }`}
                     >
                       {user.isActive ? "Hoạt động" : "Không hoạt động"}
                     </div>
                   </TableCell>
                   <TableCell className="h-[50px] px-4 cursor-pointer whitespace-nowrap">
-                    {user?.role?.name === "admin"
-                      ? "Quản trị viên"
-                      : user?.role?.name === "user"
-                      ? "Học viên"
-                      : user?.role?.name}
+                    {user?.role?.name}
                   </TableCell>
                   <TableCell className="h-[50px] px-4 cursor-pointer whitespace-nowrap">
                     {moment(user.createdAt).subtract(10, "days").calendar()}

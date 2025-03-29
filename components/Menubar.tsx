@@ -29,6 +29,16 @@ export default function Menubar() {
                 icon: LayoutGrid,
             },
             {
+                title: t('userManagement'),
+                url: "#",
+                icon: UsersRound,
+                items: [
+                    { title: t('userAccounts'), url: "/manage/user-accounts" },
+                    { title: t('accountGroups'), url: "/manage/account-groups" },
+                    { title: t('rolesPermissions'), url: "/manage/roles-permissions" },
+                ],
+            },
+            {
                 title: t('courseManagement'),
                 url: "#",
                 icon: BookOpen,
@@ -37,16 +47,6 @@ export default function Menubar() {
                     { title: t('courseCategories'), url: "/manage/categories" },
                     { title: t('courseTags'), url: "/manage/tags" },
                     { title: t('activationCodes'), url: "/manage/activate-course" },
-                ],
-            },
-            {
-                title: t('userManagement'),
-                url: "#",
-                icon: UsersRound,
-                items: [
-                    { title: t('userAccounts'), url: "/manage/user-accounts" },
-                    { title: t('accountGroups'), url: "/manage/account-groups" },
-                    { title: t('rolesPermissions'), url: "/manage/roles-permissions" },
                 ],
             },
             {
