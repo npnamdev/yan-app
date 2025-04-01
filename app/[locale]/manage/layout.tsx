@@ -8,7 +8,7 @@ export default function ManageLayout({ children }: { children: React.ReactNode }
     return (
         <>
             {/* <AdminRoute> */}
-            <SidebarProvider className="text-black font-semibold">
+            <SidebarProvider className="text-black font-semibold select-none">
                 <Menubar />
                 <SidebarInset className="bg-gray-100">
                     <HeaderLayout />

@@ -1,80 +1,31 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import useSWR from "swr";
-import {
-  ChevronLeft,
-  ChevronRight,
-  ChevronsLeft,
-  ChevronsRight,
-  ChevronsUpDown,
-  Clipboard,
-  Download,
-  ScanEye,
-  Search,
-  SquarePen,
-  Trash,
-  Upload,
-  Plus,
-} from "lucide-react";
-import Papa from "papaparse";
+import useSWR, { mutate } from "swr";
 import axios from "axios";
+import Papa from "papaparse";
 import Image from "next/image";
 import moment from "moment";
-import { mutate } from "swr";
+import { toast } from "sonner";
+
 import { Input } from "@/components/ui/input";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Checkbox } from "@/components/ui/checkbox";
-import { StatusFilter } from "@/components/StatusFilter";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Button } from "@/components/ui/button";
-import {
-  Command,
-  CommandGroup,
-  CommandItem,
-  CommandList,
-} from "@/components/ui/command";
-import {
-  Pagination,
-  PaginationContent,
-  PaginationItem,
-} from "@/components/ui/pagination";
+import { Command, CommandGroup, CommandItem, CommandList } from "@/components/ui/command";
+import { Pagination, PaginationContent, PaginationItem } from "@/components/ui/pagination";
+import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Dialog, DialogContent, DialogClose, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Label } from "@/components/ui/label";
+
+import { ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight, ChevronsUpDown, Clipboard, Download, ScanEye, Search, SquarePen, Trash, Upload, Plus } from "lucide-react";
+
+import { useRoles } from "@/hooks/useRoles";
+
+import { StatusFilter } from "@/components/StatusFilter";
 import { UserActionMenu } from "@/components/UserActionMenu";
 import { ActionBtn } from "@/components/ActionBtn";
-
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectLabel,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select"
-
-import {
-  Dialog,
-  DialogContent,
-  DialogClose,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
-import { Label } from "@/components/ui/label";
-import { toast } from "sonner";
-import { useRoles } from "@/hooks/useRoles";
 
 
 export default function UserAccountsPage() {
@@ -82,7 +33,7 @@ export default function UserAccountsPage() {
   const [selectedUsers, setSelectedUsers] = useState<User[]>([]);
   const [limit, setLimit] = useState(13);
   const [open, setOpen] = useState(false);
-  const [value, setValue] = useState("13");
+  const [value, setValue] = useState("15");
   const [searchTerm, setSearchTerm] = useState("");
   const [debouncedSearchTerm, setDebouncedSearchTerm] = useState("");
 
@@ -92,6 +43,10 @@ export default function UserAccountsPage() {
   const [password, setPassword] = useState("");
   const [role, setRole] = useState("");
   const { roles, loading } = useRoles();
+
+  const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
+  const [userToDelete, setUserToDelete] = useState<string | null>(null);
+
 
   const fetcher = async (url: string): Promise<any> => {
     try {
@@ -153,11 +108,16 @@ export default function UserAccountsPage() {
     }
   };
 
+  const confirmDeleteUser = (userId: string) => {
+    setUserToDelete(userId);
+    setIsDeleteDialogOpen(true);
+  };
 
-  const handleDeleteUser = async (userId: string) => {
+  const handleDeleteUser = async () => {
+    if (!userToDelete) return;
     try {
       const response = await axios.delete(
-        `https://api.rock.io.vn/api/v1/users/${userId}`
+        `https://api.rock.io.vn/api/v1/users/${userToDelete}`
       );
       if (response) {
         mutate(
@@ -167,8 +127,12 @@ export default function UserAccountsPage() {
       }
     } catch (error) {
       toast.error("Error deleting user");
+    } finally {
+      setIsDeleteDialogOpen(false);
+      setUserToDelete(null);
     }
   };
+
 
   const users: User[] = data?.data;
   const totalPages = data?.pagination?.totalPages;
@@ -209,7 +173,6 @@ export default function UserAccountsPage() {
 
   const itemsPerPageOptions = [
     { value: "10", label: "10", action: () => handleLimitChange(10) },
-    { value: "13", label: "13", action: () => handleLimitChange(13) },
     { value: "15", label: "15", action: () => handleLimitChange(15) },
     { value: "20", label: "20", action: () => handleLimitChange(20) },
     { value: "30", label: "30", action: () => handleLimitChange(30) },
@@ -281,7 +244,8 @@ export default function UserAccountsPage() {
       icon: <Trash size={16} strokeWidth={1.5} />,
       value: "delete",
       label: "Xóa người dùng",
-      action: (userID: any) => handleDeleteUser(userID),
+      // action: (userID: any) => handleDeleteUser(userID),
+      action: (userID: string) => confirmDeleteUser(userID),
     },
   ];
 
@@ -333,14 +297,14 @@ export default function UserAccountsPage() {
               options={actionOptions}
               selectedUsers={selectedUsers}
             />
-            <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen} modal={true}>
+            <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
               <DialogTrigger asChild>
                 <Button className="px-2.5 gap-1 text-[13.5px]">
                   <Plus strokeWidth="1.5" />
                   Thêm người dùng
                 </Button>
               </DialogTrigger>
-              <DialogContent className="sm:max-w-[580px] p-0">
+              <DialogContent className="sm:max-w-[540px] p-0">
                 <DialogHeader className="border-b h-[60px] flex justify-center px-6">
                   <DialogTitle className="text-[16px] font-bold">
                     Thêm người dùng mới
@@ -348,7 +312,7 @@ export default function UserAccountsPage() {
                 </DialogHeader>
                 <div className="py-4 px-6 space-y-4">
                   <div className="grid gap-2">
-                    <Label htmlFor="username">Username</Label>
+                    <Label htmlFor="username">Tên tài khoản</Label>
                     <Input
                       id="username"
                       placeholder="Nhập username"
@@ -367,7 +331,7 @@ export default function UserAccountsPage() {
                     />
                   </div>
                   <div className="grid gap-2">
-                    <Label htmlFor="password">Password</Label>
+                    <Label htmlFor="password">Mật khẩu</Label>
                     <Input
                       id="password"
                       type="text"
@@ -403,7 +367,24 @@ export default function UserAccountsPage() {
                 </DialogFooter>
               </DialogContent>
             </Dialog>
-
+            <Dialog open={isDeleteDialogOpen} onOpenChange={setIsDeleteDialogOpen}>
+              <DialogContent>
+                <DialogHeader>
+                  <DialogTitle>Xác nhận xóa</DialogTitle>
+                </DialogHeader>
+                <div className="py-4">
+                  Bạn có chắc chắn muốn xóa người dùng này không?
+                </div>
+                <DialogFooter>
+                  <Button variant="outline" onClick={() => setIsDeleteDialogOpen(false)}>
+                    Hủy
+                  </Button>
+                  <Button onClick={handleDeleteUser}>
+                    Xóa
+                  </Button>
+                </DialogFooter>
+              </DialogContent>
+            </Dialog>
           </div>
         </div>
         <Table className="w-full">
