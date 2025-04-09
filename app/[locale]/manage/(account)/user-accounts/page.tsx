@@ -31,9 +31,9 @@ import { ActionBtn } from "@/components/ActionBtn";
 export default function UserAccountsPage() {
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedUsers, setSelectedUsers] = useState<User[]>([]);
-  const [limit, setLimit] = useState(13);
+  const [limit, setLimit] = useState(10);
   const [open, setOpen] = useState(false);
-  const [value, setValue] = useState("15");
+  const [value, setValue] = useState("10");
   const [searchTerm, setSearchTerm] = useState("");
   const [debouncedSearchTerm, setDebouncedSearchTerm] = useState("");
 
@@ -176,6 +176,8 @@ export default function UserAccountsPage() {
     { value: "15", label: "15", action: () => handleLimitChange(15) },
     { value: "20", label: "20", action: () => handleLimitChange(20) },
     { value: "30", label: "30", action: () => handleLimitChange(30) },
+    { value: "40", label: "40", action: () => handleLimitChange(40) },
+    { value: "50", label: "50", action: () => handleLimitChange(50) }
   ];
 
   const statusOptions = [
